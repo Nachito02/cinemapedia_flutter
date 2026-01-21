@@ -1,71 +1,25 @@
 import 'package:cinemapedia/presentation/screens/screens.dart';
-import 'package:cinemapedia/presentation/views/views.dart';
 import 'package:go_router/go_router.dart';
 
 final appRputer = GoRouter(
   initialLocation: '/',
 
   routes: [
-    ShellRoute(
-      builder: (context, state, child) {
-        return HomeScreen(childView: child);
-      },
+    GoRoute(
+      path: '/',
+      name: HomeScreen.name,
+      builder: (context, state) => const HomeScreen(),
+
       routes: [
         GoRoute(
-          path: '/',
+          path: 'movie/:id',
+          name: MovieScreen.name,
           builder: (context, state) {
-            return const HomeView();
-          },
-
-          routes: [
-            GoRoute(
-              path: '/',
-              name: HomeScreen.name,
-              builder: (context, state) =>
-                  const HomeScreen(childView: HomeView()),
-
-              routes: [
-                GoRoute(
-                  path: 'movie/:id',
-                  name: MovieScreen.name,
-                  builder: (context, state) {
-                    final movieId = state.pathParameters['id'] ?? 'no-id';
-                    return MovieScreen(movieId: movieId);
-                  },
-                ),
-              ],
-            ),
-          ],
-        ),
-
-        GoRoute(
-          path: '/favorites',
-          builder: (context, state) {
-            return const FavoritesView();
+            final movieId = state.pathParameters['id'] ?? 'no-id';
+            return MovieScreen(movieId: movieId);
           },
         ),
       ],
     ),
   ],
-
-  //Rutas padres e hijos
-
-  // routes: [
-  //   GoRoute(
-  //     path: '/',
-  //     name: HomeScreen.name,
-  //     builder: (context, state) => const HomeScreen(childView: HomeView(),),
-
-  //     routes: [
-  //       GoRoute(
-  //         path: 'movie/:id',
-  //         name: MovieScreen.name,
-  //         builder: (context, state) {
-  //           final movieId = state.pathParameters['id'] ?? 'no-id';
-  //           return MovieScreen(movieId: movieId);
-  //         },
-  //       ),
-  //     ],
-  //   ),
-  // ],
 );
