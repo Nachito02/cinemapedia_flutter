@@ -20,38 +20,33 @@ class MovieHorizontalListview extends StatefulWidget {
   });
 
   @override
-  State<MovieHorizontalListview> createState() => _MovieHorizontalListviewState();
-
+  State<MovieHorizontalListview> createState() =>
+      _MovieHorizontalListviewState();
 }
 
 class _MovieHorizontalListviewState extends State<MovieHorizontalListview> {
-  
   final scrollController = ScrollController();
 
   @override
   void initState() {
     super.initState();
 
-
     scrollController.addListener(() {
+      if (widget.loadNextPage == null) return;
 
-      if( widget.loadNextPage == null) return;
-
-      if((scrollController.position.pixels + 200) >= scrollController.position.maxScrollExtent ) {
-
+      if ((scrollController.position.pixels + 200) >=
+          scrollController.position.maxScrollExtent) {
         widget.loadNextPage!();
       }
-
     });
   }
-
 
   @override
   void dispose() {
     scrollController.dispose();
     super.dispose();
   }
- 
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -127,13 +122,16 @@ class _Slide extends StatelessWidget {
                 Icon(Icons.star_half_outlined, color: Colors.yellow.shade800),
                 SizedBox(width: 3),
                 Text(
-                  '${movie.voteAverage}',
+                  HumanFormats.number(movie.voteAverage, 1),
                   style: textStyles.bodySmall?.copyWith(
                     color: Colors.yellow.shade800,
                   ),
                 ),
                 Spacer(),
-                Text('${HumanFormats.number(movie.popularity)}k', style: textStyles.bodySmall,)
+                Text(
+                  '${HumanFormats.number(movie.popularity, 0)}k',
+                  style: textStyles.bodySmall,
+                ),
               ],
             ),
           ),
