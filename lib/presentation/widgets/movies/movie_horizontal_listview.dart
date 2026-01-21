@@ -99,7 +99,7 @@ class _Slide extends StatelessWidget {
                     return const CircularProgressIndicator();
                   }
                   return GestureDetector(
-                    onTap: () => context.push('/movie/${movie.id}'),
+                    onTap: () => context.push('/home/0/movie/${movie.id}'),
                     child: FadeIn(child: child),
                   );
                 },
